@@ -1,7 +1,7 @@
 {
   "project_name": "Initnomo",
   "repo_url": "https://github.com/0xamaan-dev/Initnomo",
-  "commit_sha": "93b0afa25893e8a3a6451e4f4e1fe28e0d3118f5",
+  "commit_sha": "9c2f8b839a5c472546be9ee6f510727d05cb85a6",
   "rollup_chain_id": "interwoven-1",
   "deployed_address": "init1syghptkvlfxadg3065vlemuudu3sg0uxe89782",
   "vm": "move",
