@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const DEMO_EMBED_SRC =
-  'https://www.youtube.com/embed/';
+  'https://www.youtube.com/embed/tQuwp3mPdvw?si=gYIANflHn6ycVTjM';
 
 export default function DemoVideoSection() {
   return (
@@ -49,7 +49,7 @@ export default function DemoVideoSection() {
           >
             <iframe
               src={DEMO_EMBED_SRC}
-              title="Initnomo demo — YouTube video player"
+              title="YouTube video player"
               className="absolute inset-0 h-full w-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"

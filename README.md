@@ -9,15 +9,13 @@
 | **Live** | https://initnomo.vercel.app |
 | **Repository** | https://github.com/0xamaan-dev/Initnomo |
 | **Pitch deck** | https://docs.google.com/presentation/d/1cZuB4i57buCZ2ZyNFNVLxY-qlLUSyTV33J7doVjnMi8/edit?usp=sharing |
-| **Demo video** | https://youtu.be/ |
+| **Demo video** | https://youtu.be/tQuwp3mPdvw |
 
 ---
 
 ## Initia INITIATE submission
 
 - **Project Name**: Initnomo
-
-### Project Overview
 
 Initnomo is an **Initia mainnet** trading experience: fast binary-style rounds driven by **Pyth Hermes**, with **INIT** moving on-chain for deposits, withdrawals, and Blitz entry while house balance and settlement run through **Supabase** for instant UX. It targets traders who want transparent, oracle-bound outcomes instead of opaque Web2 binaries.
 
@@ -35,13 +33,12 @@ Initnomo is an **Initia mainnet** trading experience: fast binary-style rounds d
 
 ### Demo video
 
-**1–3 minute walkthrough (YouTube):** https://youtu.be/
+**1–3 minute walkthrough (YouTube):** https://youtu.be/tQuwp3mPdvw
 
 ---
 
 ## Table of Contents
 
-0. [Initia Hackathon INITIATE submission](#initia-hackathon-initiate-submission)
 1. [Overview](#overview)
 2. [Story & Inspiration](#story--inspiration)
 3. [The Problem](#the-problem)
@@ -1049,6 +1046,7 @@ sequenceDiagram
 - **Live app:** https://initnomo.vercel.app
 - **Trade:** https://initnomo.vercel.app/trade
 - **Pitch deck:** https://docs.google.com/presentation/d/1cZuB4i57buCZ2ZyNFNVLxY-qlLUSyTV33J7doVjnMi8/edit?usp=sharing
+- **Demo Video:** https://youtu.be/tQuwp3mPdvw
 
 ---
 
