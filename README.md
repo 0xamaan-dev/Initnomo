@@ -393,10 +393,6 @@ Versions follow `package.json` at repo root. The **Initnomo product path** is **
 | **Tailwind CSS** v4 | **@cosmjs/*** (amino, stargate, proto-signing, tendermint-rpc) — Initia REST/RPC + tx plumbing in `lib/initia/` | **Pyth Hermes** (`@pythnetwork/hermes-client` 2.0.0) — sub-second price feeds | **Vercel Analytics** + **Speed Insights** |
 | **Zustand** ^5 — store slices under `lib/store/` | **Privy** (`@privy-io/react-auth`) — optional; env-gated, not the primary Initia connect path | **Initia treasury** — server-side signing via `INITIA_TREASURY_PRIVATE_KEY` + `lib/initia/backend-client.ts` | **Supabase CLI** (dev) + **ts-node** |
 | **TanStack React Query** ^5 | | **PostHog** (`posthog-js` / `posthog-node`) — product analytics | **TypeScript** compiler + **Node 20**-friendly dependency pins (see `package.json` `_resolutions_note`) |
-| **Framer Motion** — landing / UI motion | | | |
-| **Recharts** + **d3-scale** / **d3-shape** — charting | | | |
-| **Three.js** / **OGL** — 3D / visual layers where used | | | |
-| **Lucide React** — icons | | | |
 
 ---
 
