@@ -87,9 +87,9 @@ export default function LogosMarqueeSection() {
         <div className="logos-marquee-header">
           <div className="logos-marquee-kicker">
             <span className="logos-marquee-kicker-dot" />
-            Supported Networks
+            Supported Tokens
           </div>
-          <h2 className="logos-marquee-title">Chains + DEX ecosystem</h2>
+          <h2 className="logos-marquee-title">Chains + Tools</h2>
           <p className="logos-marquee-subtitle">
             Initnomo keeps a premium chain + tooling presentation so the landing experience remains high-signal and complete.
           </p>
