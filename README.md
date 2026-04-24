@@ -95,15 +95,15 @@ Today, Binary options trading in Web3 doesn't exist at all.
 
 ---
 
-## The Solution
+## The Solution - Bynomo
 
-Initnomo solves all of this:
-
-- **Pyth Hermes** delivers sub-1-second price feeds across 1010+ assets.
-- **Binary rounds** at 5s / 10s / 15s / 30s / 1m timeframes — no wallet signature per bet.
-- **One single EOA treasury** per chain — infinite bets, no cap, instant house balance settlement.
-- **Fully on-chain verifiable** — every deposit, withdrawal, and payout is logged immutably.
-- **Initia mainnet** (`interwoven-1`) as the settlement chain for treasury + balance mutations in this fork (InterwovenKit).
+Where every millisecond is tracked by Pyth oracles to pull real-time data
+- Traders can Trade over 300+ Crypto, 100+ Stocks, 5+ Metals, 10+Forex, Commodities, Bonds every single thing on Real-time price chart
+- Users can bet unlimited times without signing txn
+- Every user can trade binary options at lightning speed at 5s,10s,15s,30s,1m timeframes
+- Infinite txns, no cap amounts and One Single Treasury
+- Plan is to introduce 1-10x leverage, trade in open crypto markets freely And Settlement in <0.001 ms
+Like Binomo of Web2, but 10x better than any other dapp in existence.
 
 ---
 
