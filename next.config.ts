@@ -50,7 +50,7 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         headers: [
           // Restrict browser CORS to first-party origin only.
-          { key: "Access-Control-Allow-Origin", value: "https://initnomo.fun" },
+          { key: "Access-Control-Allow-Origin", value: "https://initnomo.vercel.app" },
           { key: "Vary", value: "Origin" },
         ],
       },

@@ -15,7 +15,7 @@ export function getReferralShareTweetText(): string {
 }
 
 export function referralLandingUrl(referralCode: string): string {
-  return `https://initnomo.fun/?ref=${encodeURIComponent(referralCode.trim())}`;
+  return `https://initnomo.vercel.app/?ref=${encodeURIComponent(referralCode.trim())}`;
 }
 
 export function openReferralShareOnX(referralLink: string): void {

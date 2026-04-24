@@ -36,7 +36,7 @@ export default function ReferralPage() {
 
     useEffect(() => {
         if (referralCode && typeof window !== 'undefined') {
-            setReferralLink(`https://initnomo.fun/?ref=${referralCode}`);
+            setReferralLink(`https://initnomo.vercel.app/?ref=${referralCode}`);
         }
     }, [referralCode]);
 

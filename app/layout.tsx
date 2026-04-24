@@ -23,7 +23,7 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://initnomo.fun'),
+  metadataBase: new URL('https://initnomo.vercel.app'),
   title: "Initnomo - Initia-focused binary options trading",
   description:
     "Initia-focused on-chain binary options trading app with oracle-backed settlement.",

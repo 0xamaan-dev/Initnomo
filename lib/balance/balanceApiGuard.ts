@@ -11,8 +11,8 @@ function getAllowedOrigins(request: NextRequest): Set<string> {
     [
       request.nextUrl.origin,
       process.env.NEXT_PUBLIC_APP_URL?.trim(),
-      'https://initnomo.fun',
-      'https://www.initnomo.fun',
+      'https://initnomo.vercel.app',
+      'https://www.initnomo.vercel.app',
     ].filter((value): value is string => Boolean(value)),
   );
 }
