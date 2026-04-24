@@ -9,12 +9,39 @@
 | **Live** | https://initnomo.vercel.app |
 | **Repository** | https://github.com/0xamaan-dev/Initnomo |
 | **Pitch deck** | https://docs.google.com/presentation/d/1cZuB4i57buCZ2ZyNFNVLxY-qlLUSyTV33J7doVjnMi8/edit?usp=sharing |
-| **Demo video** | https://youtu.be/|
+| **Demo video** | https://youtu.be/ |
+
+---
+
+## Initia INITIATE submission
+
+- **Project Name**: Initnomo
+
+### Project Overview
+
+Initnomo is an **Initia mainnet** trading experience: fast binary-style rounds driven by **Pyth Hermes**, with **INIT** moving on-chain for deposits, withdrawals, and Blitz entry while house balance and settlement run through **Supabase** for instant UX. It targets traders who want transparent, oracle-bound outcomes instead of opaque Web2 binaries.
+
+### Implementation Detail
+
+- **The custom implementation:** Classic, Box, and Draw modes on a live chart; tiered deposit/withdraw fees; Blitz windows with server-side fee collection (`POST /api/balance/blitz`); referral and leaderboard flows; balance session hardening for API routes.
+- **The native feature — Auto-signing:** InterwovenKit Auto-Sign is **configured** on `interwoven-1` for **bank sends** so users can opt in to fewer prompts for repeat **INIT** deposits; see `app/providers.tsx`, `lib/initia/client.ts`, and the **Initia Auto-Sign** panel in `components/balance/DepositModal.tsx`.
+
+### How to run locally
+
+1. Clone the repo and `cd` into the project root.
+2. `cp .env.example .env` and fill **Supabase**, **balance secrets**, and **Initia mainnet** variables (`NEXT_PUBLIC_INITIA_*`, `INITIA_TREASURY_PRIVATE_KEY` only on secure machines).
+3. `yarn install` then `yarn dev` and open `http://localhost:3000`.
+4. Connect with **InterwovenKit**, optionally **enable Auto-Sign** in the deposit modal, deposit **INIT**, then open **`/trade`** to use the product end-to-end.
+
+### Demo video
+
+**1–3 minute walkthrough (YouTube):** https://youtu.be/
 
 ---
 
 ## Table of Contents
 
+0. [Initia Hackathon INITIATE submission](#initia-hackathon-initiate-submission)
 1. [Overview](#overview)
 2. [Story & Inspiration](#story--inspiration)
 3. [The Problem](#the-problem)
@@ -355,16 +382,21 @@ In this build, Blitz entry is charged against **house balance** via **`POST /api
 
 ## Tech stack
 
-| Layer | Choices in this repository |
-|-------|----------------------------|
-| **App** | Next.js (App Router), React, TypeScript, Tailwind CSS |
-| **State** | Zustand slices under `lib/store/` |
-| **Prices** | Pyth Hermes (client + resolution helpers) |
-| **Data** | Supabase Postgres + RPCs (`supabase/migrations/`) |
-| **Chain** | **Initia mainnet** via `lib/initia/*`, InterwovenKit in `app/providers.tsx` (`interwoven-1`) |
-| **Compat shell** | Minimal Wagmi provider (dependency shim, not a second chain) |
-| **Analytics** | PostHog, Vercel Analytics / Speed Insights |
-| **Testing** | Jest + Testing Library (see `package.json` scripts) |
+### Infra / Tech
+
+Versions follow `package.json` at repo root. The **Initnomo product path** is **Initia mainnet + InterwovenKit + Next.js + Supabase**; additional chain SDKs may still be listed in dependencies from the upstream fork but are **not** part of the shipped Initia-only UX.
+
+| 🖥️ Frontend | 🔗 Web3 / Wallet | ⚙️ Backend | 🛠️ Tooling |
+|:------------|:-----------------|:------------|:-----------|
+| **Next.js 16.1.3** — App Router, Turbopack | **InterwovenKit** (`@initia/interwovenkit-react` ^2.5) — Initia mainnet `interwoven-1`, deposits via `requestTxBlock`, optional **Auto-Sign** for `MsgSend` | **Next.js Route Handlers** on Vercel (`app/api/*`) | **ESLint 9** + **eslint-config-next** 16.1.3 |
+| **React 19.2.3** + **TypeScript** ^5 | **wagmi 3** + **viem 2** — minimal `WagmiProvider` for InterwovenKit peer deps (not a second trading chain) | **Supabase** — Postgres + RPCs (`supabase/migrations/`) | **Jest 30** + **Testing Library** + **fast-check** |
+| **Tailwind CSS** v4 | **@cosmjs/*** (amino, stargate, proto-signing, tendermint-rpc) — Initia REST/RPC + tx plumbing in `lib/initia/` | **Pyth Hermes** (`@pythnetwork/hermes-client` 2.0.0) — sub-second price feeds | **Vercel Analytics** + **Speed Insights** |
+| **Zustand** ^5 — store slices under `lib/store/` | **Privy** (`@privy-io/react-auth`) — optional; env-gated, not the primary Initia connect path | **Initia treasury** — server-side signing via `INITIA_TREASURY_PRIVATE_KEY` + `lib/initia/backend-client.ts` | **Supabase CLI** (dev) + **ts-node** |
+| **TanStack React Query** ^5 | | **PostHog** (`posthog-js` / `posthog-node`) — product analytics | **TypeScript** compiler + **Node 20**-friendly dependency pins (see `package.json` `_resolutions_note`) |
+| **Framer Motion** — landing / UI motion | | | |
+| **Recharts** + **d3-scale** / **d3-shape** — charting | | | |
+| **Three.js** / **OGL** — 3D / visual layers where used | | | |
+| **Lucide React** — icons | | | |
 
 ---
 

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { useOverflowStore } from '@/lib/store';
 import { useToast } from '@/lib/hooks/useToast';
 import { useInterwovenKit } from '@initia/interwovenkit-react';
+import { INITIA_CHAIN_ID } from '@/lib/initia/config';
 
 interface DepositModalProps {
   isOpen: boolean;
@@ -20,7 +21,7 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose, onS
   const [error, setError] = useState<string | null>(null);
 
   const { address, depositFunds, network, walletBalance, refreshWalletBalance } = useOverflowStore();
-  const { requestTxBlock } = useInterwovenKit();
+  const { requestTxBlock, autoSign } = useInterwovenKit();
   const toast = useToast();
   const quickAmounts = [0.1, 0.5, 1, 5];
 
@@ -104,6 +105,44 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose, onS
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-mono">INIT</span>
           </div>
+        </div>
+
+        <div className="rounded-lg border border-white/10 bg-black/30 p-3 space-y-2">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Initia Auto-Sign</p>
+          <p className="text-[11px] text-gray-400 leading-relaxed">
+            Optional: grant Auto-Sign for <span className="text-white/90">MsgSend</span> on{' '}
+            <span className="font-mono text-[#00f5ff]">{INITIA_CHAIN_ID}</span> so repeat INIT deposits can flow with fewer wallet prompts (
+            <a
+              className="text-[#00f5ff] underline underline-offset-2"
+              href="https://docs.initia.xyz/interwovenkit/features/autosign/configuration"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              docs
+            </a>
+            ).
+          </p>
+          {autoSign.isEnabledByChain?.[INITIA_CHAIN_ID] ? (
+            <p className="text-emerald-400 text-xs font-mono">Auto-Sign enabled for this chain.</p>
+          ) : (
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full text-xs"
+              disabled={isLoading || autoSign.isLoading || !address}
+              onClick={async () => {
+                try {
+                  await autoSign.enable(INITIA_CHAIN_ID);
+                  toast.success('Auto-Sign enabled for Initia deposits');
+                } catch (e: unknown) {
+                  const msg = e instanceof Error ? e.message : 'Could not enable Auto-Sign';
+                  toast.error(msg);
+                }
+              }}
+            >
+              {autoSign.isLoading ? 'Opening wallet…' : 'Enable Auto-Sign for deposits'}
+            </Button>
+          )}
         </div>
 
         <div className="grid grid-cols-4 gap-2">

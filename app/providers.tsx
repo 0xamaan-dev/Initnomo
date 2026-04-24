@@ -6,6 +6,7 @@ import { ToastProvider } from '@/components/ui/ToastProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { InterwovenKitProvider, MAINNET as INITIA_MAINNET, injectStyles as injectInitiaStyles, useInterwovenKit } from '@initia/interwovenkit-react';
 import interwovenKitStyles from '@initia/interwovenkit-react/styles.js';
+import { INITIA_CHAIN_ID } from '@/lib/initia/config';
 import { WagmiProvider, createConfig, http } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 import { WalletConnectModal } from '@/components/wallet/WalletConnectModal';
@@ -94,7 +95,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiConfig}>
-        <InterwovenKitProvider {...INITIA_MAINNET}>
+        <InterwovenKitProvider
+          {...INITIA_MAINNET}
+          enableAutoSign={{
+            [INITIA_CHAIN_ID]: ['/cosmos.bank.v1beta1.MsgSend'],
+          }}
+        >
           <WalletSync />
           <ReferralSync />
           {children}
