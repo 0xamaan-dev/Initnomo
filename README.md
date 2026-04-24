@@ -389,16 +389,16 @@ All slices are combined into `useOverflowStore` in `lib/store/index.ts`.
 
 ```mermaid
 flowchart LR
-  U[User] -->|Open UI| FE[Next.js React App\nApp Router + Components + Zustand]
-  FE -->|Wallet connect| W[Initia mainnet wallet\nInterwovenKit (+ minimal Wagmi shell)]
-  FE -->|Place bet| API_BET[POST /api/balance/bet]
-  FE -->|Save bet result| API_SAVE[POST /api/bets/save]
-  FE -->|Claim winnings| API_WIN[POST /api/balance/win]
-  FE -->|Withdraw| API_WITH[POST /api/balance/withdraw]
-  FE -->|Blitz entry| API_BLITZ[POST /api/balance/blitz]
-  FE -->|Leaderboard| API_LB[GET /api/bets/leaderboard]
+  U[User] -->|Open UI| FE["Next.js React App\nApp Router, components, Zustand"]
+  FE -->|Wallet connect| W["Initia mainnet wallet\nInterwovenKit and minimal Wagmi shell"]
+  FE -->|Place bet| API_BET["POST /api/balance/bet"]
+  FE -->|Save bet result| API_SAVE["POST /api/bets/save"]
+  FE -->|Claim winnings| API_WIN["POST /api/balance/win"]
+  FE -->|Withdraw| API_WITH["POST /api/balance/withdraw"]
+  FE -->|Blitz entry| API_BLITZ["POST /api/balance/blitz"]
+  FE -->|Leaderboard| API_LB["GET /api/bets/leaderboard"]
 
-  API_BET --> SB[(Supabase\nbet_history\nuser_balances\nbalance_audit_log)]
+  API_BET --> SB["Supabase\nbet_history, user_balances, balance_audit_log"]
   API_SAVE --> SB
   API_WIN --> SB
   API_WITH --> SB
@@ -410,39 +410,39 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  A[User selects target + amount] --> B[Zustand creates active bet in-memory\nuserAddress captured at placement]
-  B --> C[POST /api/balance/bet]
-  C --> D[Supabase RPC deduct_balance_for_bet\natomic balance update + audit log]
-  D --> E[Returns success + remaining balance]
+  A["User selects target and amount"] --> B["Zustand creates active bet in-memory\nuserAddress captured at placement"]
+  B --> C["POST /api/balance/bet"]
+  C --> D["Supabase RPC deduct_balance_for_bet\natomic balance update and audit log"]
+  D --> E["Returns success and remaining balance"]
 
-  E --> F[Pyth price feed updates continuously]
-  F --> G[Bet resolves at endTime]
+  E --> F["Pyth price feed updates continuously"]
+  F --> G["Bet resolves at endTime"]
 
-  G --> H{Did user win?}
-  H -- Yes --> I[POST /api/balance/win\nwith dedup guard on betId]
-  I --> J[Supabase RPC credit_balance_for_payout\ncredits balance + audit log]
-  H -- No --> K[No payout]
+  G --> H{Did user win}
+  H -- Yes --> I["POST /api/balance/win\nwith dedup guard on betId"]
+  I --> J["Supabase RPC credit_balance_for_payout\ncredits balance and audit log"]
+  H -- No --> K["No payout"]
 
-  G --> L[POST /api/bets/save — real mode only]
-  L --> M[Upsert row in bet_history]
+  G --> L["POST /api/bets/save, real mode only"]
+  L --> M["Upsert row in bet_history"]
 ```
 
 #### Withdrawal flow
 
 ```mermaid
 flowchart TD
-  U[User requests withdrawal] --> W[POST /api/balance/withdraw]
-  W --> V[Fetch balance + status from Supabase]
-  V --> X{Valid balance?}
-  X -- No --> Y[Reject 400/403/404]
-  X -- Yes --> CAP{Within withdrawal cap?}
-  CAP -- No --> CAPERR[Reject — exceeds 1.08× deposited]
-  CAP -- Yes --> Z[Apply tier fee\nfree=10% standard=9% vip=8%]
-  Z --> T[netWithdrawAmount = amount - feeAmount]
-  T --> FEE[Transfer feeAmount → fee collector wallet]
-  FEE --> S[Transfer net INIT → user Initia address\n`transferINITFromTreasury`]
-  S --> R[Supabase RPC update_balance_for_withdrawal]
-  R --> OK[Return txHash + newBalance]
+  U["User requests withdrawal"] --> W["POST /api/balance/withdraw"]
+  W --> V["Fetch balance and status from Supabase"]
+  V --> X{Valid balance}
+  X -- No --> Y["Reject 400, 403, or 404"]
+  X -- Yes --> CAP{Within withdrawal cap}
+  CAP -- No --> CAPERR["Reject: exceeds 1.08x deposited"]
+  CAP -- Yes --> Z["Apply tier fee\nfree 10pct, standard 9pct, vip 8pct"]
+  Z --> T["netWithdrawAmount equals amount minus feeAmount"]
+  T --> FEE["Transfer fee to platform fee wallet"]
+  FEE --> S["Transfer net INIT to user Initia address\ntransferINITFromTreasury"]
+  S --> R["Supabase RPC update_balance_for_withdrawal"]
+  R --> OK["Return txHash and newBalance"]
 ```
 
 ---
@@ -810,34 +810,34 @@ sequenceDiagram
     actor User
     participant Wallet as Wallet
     participant Chain as Blockchain
-    participant API as API + Supabase
+    participant API as API and Supabase
     participant Pyth as Pyth Hermes
 
-    Note over User,Pyth: 1 · DISCOVER
-    User->>API: Visit → Demo Mode (no wallet)
+    Note over User,Pyth: 1 Discover
+    User->>API: Visit demo mode without wallet
 
-    Note over User,Pyth: 2 · CONNECT
-    User->>Wallet: Connect Initia mainnet (InterwovenKit)
+    Note over User,Pyth: 2 Connect
+    User->>Wallet: Connect Initia mainnet via InterwovenKit
     Wallet-->>API: Address confirmed
 
-    Note over User,Pyth: 3 · DEPOSIT
-    User->>Chain: Send INIT → Treasury
-    Chain->>API: Verify INIT deposit · apply tier fee · credit net balance
+    Note over User,Pyth: 3 Deposit
+    User->>Chain: Send INIT to treasury
+    Chain->>API: Verify deposit, apply tier fee, credit net balance
 
-    Note over User,Pyth: 4 · TRADE
-    Pyth-->>API: Live price feed <1s
-    User->>API: Pick mode (Box / Draw / Classic) · set amount
-    API-->>User: Balance deducted instantly — no wallet sig
+    Note over User,Pyth: 4 Trade
+    Pyth-->>API: Live price feed under one second
+    User->>API: Pick Box Draw or Classic and set amount
+    API-->>User: Balance deducted without wallet signature
     API->>Pyth: Resolve at expiry
     alt Win
-        Pyth-->>API: Payout credited (dedup-guarded)
+        Pyth-->>API: Payout credited with dedup guard
     else Lose
         Pyth-->>API: Stake kept by house
     end
 
-    Note over User,Pyth: 5 · WITHDRAW
-    User->>API: Request withdrawal (auth cookie / session)
-    API->>Chain: Transfer net → User wallet (fee deducted)
+    Note over User,Pyth: 5 Withdraw
+    User->>API: Request withdrawal with session auth
+    API->>Chain: Transfer net to user wallet after fee
 ```
 
 ### Key UX Properties
