@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { BetRecord } from '@/types/bet';
+import { useStore } from '@/lib/store';
 
 interface BetCardProps {
   bet: BetRecord;
@@ -10,6 +11,8 @@ interface BetCardProps {
 }
 
 export const BetCard: React.FC<BetCardProps> = ({ bet, isExpanded, onToggle }) => {
+  const network = useStore((s) => s.network);
+  const currencyLabel = network === 'INIT' || !network ? 'INIT' : network;
   const isSettled = bet.endPrice > 0;
   const isActive = !isSettled;
 
@@ -61,10 +64,10 @@ export const BetCard: React.FC<BetCardProps> = ({ bet, isExpanded, onToggle }) =
         </div>
 
         <div className="text-right">
-          <p className="text-white font-bold">{parseFloat(bet.amount).toFixed(4)} BNB</p>
+          <p className="text-white font-bold">{parseFloat(bet.amount).toFixed(4)} {currencyLabel}</p>
           {isSettled && (
             <p className={`text-sm font-semibold ${bet.won ? 'text-green-400' : 'text-red-400'}`}>
-              {bet.won ? `+${parseFloat(bet.payout).toFixed(4)}` : `-${parseFloat(bet.amount).toFixed(4)}`} BNB
+              {bet.won ? `+${parseFloat(bet.payout).toFixed(4)}` : `-${parseFloat(bet.amount).toFixed(4)}`} {currencyLabel}
             </p>
           )}
           {isActive && (
@@ -124,8 +127,8 @@ export const BetCard: React.FC<BetCardProps> = ({ bet, isExpanded, onToggle }) =
               ${bet.won ? 'bg-green-900/30 text-green-400' : 'bg-red-900/30 text-red-400'}
             `}>
               {bet.won
-                ? `Won ${parseFloat(bet.payout).toFixed(4)} BNB (${((parseFloat(bet.payout) / parseFloat(bet.amount) - 1) * 100).toFixed(0)}% profit)`
-                : `Lost ${parseFloat(bet.amount).toFixed(4)} BNB`
+                ? `Won ${parseFloat(bet.payout).toFixed(4)} ${currencyLabel} (${((parseFloat(bet.payout) / parseFloat(bet.amount) - 1) * 100).toFixed(0)}% profit)`
+                : `Lost ${parseFloat(bet.amount).toFixed(4)} ${currencyLabel}`
               }
             </div>
           )}

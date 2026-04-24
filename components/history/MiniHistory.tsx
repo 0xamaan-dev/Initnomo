@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import { useStore } from '@/lib/store';
 import { motion, AnimatePresence } from 'framer-motion';
 
+function ledgerSymbol(network: string | null): string {
+  return network === 'INIT' || !network ? 'INIT' : network;
+}
+
 export const MiniHistory: React.FC = () => {
     const bets = useStore((state) => state.bets);
+    const network = useStore((state) => state.network);
     const isIndicatorsOpen = useStore((state) => state.isIndicatorsOpen);
     const setIsIndicatorsOpen = useStore((state) => state.setIsIndicatorsOpen);
     const activeIndicators = useStore((state) => state.activeIndicators);
@@ -56,7 +61,7 @@ export const MiniHistory: React.FC = () => {
                                                         : `-${parseFloat(bet.amount).toFixed(4)}`}
                                                 </span>
                                                 <span className="text-[8px] text-gray-600 uppercase font-black">
-                                                    BNB
+                                                    {ledgerSymbol(network)}
                                                 </span>
                                             </div>
                                         </div>
